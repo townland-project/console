@@ -1,0 +1,5 @@
+<mat-divider></mat-divider>
+<div class="footer flex nowrap ai-c">
+    <button *ngIf="backable"  (click)="back.emit()" mat-button>Back</button>
+    <button (click)="next.emit()" [disabled]="disabled" mat-raised-button color="primary">{{text}}</button>
+</div>

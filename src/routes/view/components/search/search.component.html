@@ -1,0 +1,19 @@
+<div class="search-bar flex column" [ngClass]="{'open': open}">
+    <div class="search-bar-input flex nowrap ai-c">
+        <input type="text" [(ngModel)]="search"  placeholder="Search for DApp">
+        <button mat-icon-button (click)="open = !open">
+            <mat-icon>expand_more</mat-icon>
+        </button>
+    </div>
+
+    <div class="dapps flex column">
+        <a *ngFor="let dapp of Filter()"  [routerLink]="'/dapp/nft/'+dapp.index" (click)="open = false" class="item flex nowrap ai-c">
+            <img [src]="ManifestService.GetImageById(dapp.id)" [alt]="dapp.id">
+
+            <div class="flex column jc-c">
+                <strong>{{dapp.id}}</strong>
+                <span>{{dapp.owner}}</span>
+            </div>
+        </a>
+    </div>
+</div>

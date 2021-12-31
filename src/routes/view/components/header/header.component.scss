@@ -1,0 +1,37 @@
+button[mat-mini-fab] {
+    box-shadow: none !important;
+
+    margin: 0 30px 0 10px;
+}
+
+div.header-title {
+    padding: 10px 10px 10px 0px;
+
+    h3 {
+        opacity: 0.7;
+    }
+
+    span {
+        font-size: 15px;
+
+        opacity: 0.5;
+    }
+}
+
+mat-icon.warning {
+    margin: 0 20px;
+
+    color: #fdd835;
+
+    animation: warning 1s infinite;
+}
+
+@keyframes warning {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+}

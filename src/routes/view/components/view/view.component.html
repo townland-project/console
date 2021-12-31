@@ -1,0 +1,11 @@
+<main *ngIf="!loading">
+    <header [ngClass]="TabsService.Tab.theme" [style.--mat-toolbar-background]="TabsService.Tab.background">
+        <app-header></app-header>
+        <div class="border"></div>
+        <app-tabs></app-tabs>
+    </header>
+    <section class="router-outlet">
+        <router-outlet></router-outlet>
+    </section>
+</main>
+<app-splash *ngIf="loading"></app-splash>

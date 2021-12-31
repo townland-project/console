@@ -1,0 +1,18 @@
+div.flex.wrap mat-card {
+    margin: 10px;
+
+    width: 120px;
+    height: 120px;
+
+    overflow: hidden;
+
+    div.flex.column {
+        height: 100%;
+
+        strong {
+            font-size: 1.1em;
+
+            margin-bottom: 10px;
+        }
+    }
+}

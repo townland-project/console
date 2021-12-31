@@ -1,0 +1,15 @@
+mat-toolbar {
+    padding: 0 50px;
+
+    a {
+        position: relative;
+
+        top: 5px;
+
+        transition: all var(--animation-speed);
+
+        &:not(.active) {
+            opacity: 0.6;
+        }
+    }
+}

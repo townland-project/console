@@ -1,0 +1,28 @@
+<mat-toolbar>
+    <mat-toolbar-row style="padding: 0 30px;">
+        <span>Townland Console</span>
+
+        <div class="flex-space"></div>
+        <app-search></app-search>
+        <div class="flex-space"></div>
+
+        <mat-icon *ngIf="!Web3Service.IsAvailable()"  class="warning" matTooltip="We need your Metamask wallet">warning</mat-icon>
+
+        <a mat-stroked-button routerLink="/dapp/create">
+            Create DApp
+        </a>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row style="padding: 0 50px;">
+        <ng-container *ngIf="TabsService.Tab.backable">
+            <button mat-mini-fab (click)="Back()">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+        </ng-container>
+
+        <div class="header-title flex column">
+            <h3>{{TabsService.Tab.title}}</h3>
+            <span>{{TabsService.Tab.subtitle}}</span>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

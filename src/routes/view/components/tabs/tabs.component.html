@@ -1,0 +1,7 @@
+<mat-toolbar>
+    <ng-container *ngFor="let tab of Tabs">
+        <a [routerLink]="tab.path" [ngClass]="tab == TabsService.Tab ? 'active' : ''"  mat-button>
+            {{tab.title}}
+        </a>
+    </ng-container>
+</mat-toolbar>

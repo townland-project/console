@@ -1,0 +1,89 @@
+header {
+    &.light {
+        mat-toolbar {
+            color: #fff;
+
+            button[mat-mini-fab] {
+                background-color: rgba($color: #fff, $alpha: 0.3) !important;
+
+                mat-icon {
+                    color: rgba($color: #fff, $alpha: 0.8) !important;
+                }
+            }
+
+            input {
+                color: rgba($color: #fff, $alpha: 0.8);
+
+                &::placeholder {
+                    color: rgba($color: #fff, $alpha: 0.7);
+                }
+            }
+
+            div.search-bar {
+                div.dapps {
+                    color: #000;
+                }
+                
+                &.open {
+                    color: #000;
+                    
+                    input {
+                        color: rgba($color: #000, $alpha: 0.8);
+
+                        &::placeholder {
+                            color: rgba($color: #000, $alpha: 0.6);
+                        }
+                    }
+                }
+            }
+        }
+
+        div.border {
+            background-color: rgba($color: #fff, $alpha: 0.2);
+        }
+    }
+
+    &.dark {
+        mat-toolbar {
+            color: #000;
+
+            button[mat-mini-fab] {
+                background-color: rgba($color: #000, $alpha: 0.1) !important;
+
+                mat-icon {
+                    color: rgba($color: #000, $alpha: 0.8) !important;
+                }
+            }
+
+            input {
+                color: rgba($color: #000, $alpha: 0.8);
+
+                &::placeholder {
+                    color: rgba($color: #000, $alpha: 0.6);
+                }
+            }
+        }
+
+        div.border {
+            background-color: rgba($color: #000, $alpha: 0.1);
+        }
+    }
+
+    mat-toolbar {
+        background-color: var(--mat-toolbar-background) !important;
+
+        transition: all var(--animation-speed);
+    }
+
+    div.border {
+        position: absolute;
+
+        height: 1px;
+        width: calc(100% - 80px);
+        margin: 10px 40px;
+    }
+}
+
+section.router-outlet {
+    padding: 20px 5vw 50px 5vw;
+}

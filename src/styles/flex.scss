@@ -1,0 +1,27 @@
+.flex-space {
+    flex: 1;
+}
+
+.flex {
+    display: flex;
+
+    &.wrap {
+        flex-wrap: wrap;
+    }
+
+    &.nowrap {
+        flex-wrap: nowrap;
+    }
+
+    &.column {
+        flex-direction: column;
+    }
+
+    &.ai-c {
+        align-items: center;
+    }
+
+    &.jc-c {
+        justify-content: center;
+    }
+}

@@ -1,0 +1,89 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Create a new DApp</mat-card-title>
+        <mat-card-subtitle>You need to buy a DApp ID for your DApp <span *ngIf="!Web3Service.IsAvailable()"
+                class="warning">but we need your Metamask wallet.</span>.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+
+    <mat-stepper orientation="vertical" [linear]="true" #stepper>
+        <mat-step [stepControl]="select">
+            <ng-template matStepLabel>Create or select DApp ID</ng-template>
+            <p>Select one of your bought DApp ID or create one.</p>
+
+            <form class="flex column" [formGroup]="select">
+                <mat-form-field appearance="outline">
+                    <mat-label>Select DApp ID</mat-label>
+                    <mat-select required formControlName="input"
+                        (selectionChange)="OnDAppIDChange($event)">
+                        <mat-option *ngFor="let id of IDs" [value]="id">
+                            {{id}}
+                        </mat-option>
+                        <mat-option value="create-dapp-id">
+                            Create new DApp ID
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+
+            <app-create-footer [backable]="false" [disabled]="(SelectID.length == 0 && createable == false) || loading"
+                (next)="Next()"></app-create-footer>
+        </mat-step>
+        <mat-step [stepControl]="create" *ngIf="createable">
+            <ng-template matStepLabel>Buy DApp ID</ng-template>
+            <p>Enter a your new DApp ID and pay it with <b>{{ContractService.Fee / 1000}} MATIC</b>.</p>
+            <p>Hint: Your DApp ID must be like <code>xyz.townland.app</code></p>
+
+            <form class="flex column" [formGroup]="create">
+                <mat-form-field appearance="outline">
+                    <mat-label>DApp ID</mat-label>
+                    <input matInput required type="text" autocomplete="off" formControlName="input"
+                        (keyup.enter)="ConfirmAndPayDAppID()">
+                </mat-form-field>
+            </form>
+
+            <app-create-footer (back)="Back()" [disabled]="!ValidDAppID || loading" text="Confirm And Buy"
+                (next)="ConfirmAndPayDAppID()"></app-create-footer>
+        </mat-step>
+        <mat-step [stepControl]="manifest">
+            <ng-template matStepLabel>Create DApp manifest</ng-template>
+            <p>Create/Edit a manifest file for your DApp.</p>
+
+            <form class="flex column" [formGroup]="manifest">
+                <mat-form-field appearance="outline">
+                    <mat-label>DApp Name</mat-label>
+                    <input matInput required type="text" autocomplete="off" formControlName="name" (keyup.enter)="SubmitManifest()">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>DApp Image</mat-label>
+                    <input matInput required type="url" autocomplete="off" formControlName="image" (keyup.enter)="SubmitManifest()">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>DApp Description</mat-label>
+                    <textarea matInput required autocomplete="off" formControlName="description" (keyup.enter)="SubmitManifest()"></textarea>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>DApp URL</mat-label>
+                    <input matInput required type="url" autocomplete="off" formControlName="external_url" (keyup.enter)="SubmitManifest()" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>DApp Author</mat-label>
+                    <input matInput required type="text" autocomplete="off" formControlName="author" (keyup.enter)="SubmitManifest()" />
+                </mat-form-field>
+
+            </form>
+            <app-create-footer (back)="Back()" [disabled]="manifest.invalid || loading" text="Submit Manifest"
+                (next)="SubmitManifest()"></app-create-footer>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Confirm and publish</ng-template>
+            <br><br>
+            <p>Well, now send us the same information on GitHub :)</p>
+            <br><br>
+        </mat-step>
+    </mat-stepper>
+</mat-card>

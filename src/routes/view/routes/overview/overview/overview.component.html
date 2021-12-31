@@ -1,0 +1,36 @@
+<div class="flex wrap">
+    <mat-card>
+        <div class="flex column ai-c jc-c">
+            <strong>Matic Price</strong>
+            <span>{{ApiService.MaticPrice}}/USD</span>
+        </div>
+    </mat-card>
+
+    <mat-card>
+        <div class="flex column ai-c jc-c">
+            <strong>Matic Price</strong>
+            <span>{{MaticToETH}}/ETH</span>
+        </div>
+    </mat-card>
+
+    <mat-card>
+        <div class="flex column ai-c jc-c">
+            <strong>Gas</strong>
+            <span>{{ApiService.MaticQuote.gas}}</span>
+        </div>
+    </mat-card>
+
+    <mat-card>
+        <div class="flex column ai-c jc-c">
+            <strong>Gas Price</strong>
+            <span>{{ApiService.MaticQuote.gasPrice}}/WEI</span>
+        </div>
+    </mat-card>
+
+    <mat-card>
+        <div class="flex column ai-c jc-c">
+            <strong>DApp ID Fee</strong>
+            <span>{{ContractService.Fee / 1000}}/Matic</span>
+        </div>
+    </mat-card>
+</div>

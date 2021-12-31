@@ -1,0 +1,118 @@
+$min-height: 250px;
+$max-height: 300px;
+
+div.search-bar {
+    position: absolute;
+    top: 15px;
+
+    width: 25vw;
+
+    border-radius: 6px;
+
+    box-shadow: 0 3px 5px rgba($color: #000, $alpha: 0.05);
+
+    background-color: rgba($color: #fff, $alpha: 0.3);
+
+    justify-content: flex-start;
+
+    transform: translateX(-50%);
+
+    z-index: 3;
+
+    transition: all var(--animation-speed);
+
+    &.open {
+        background-color: #fff;
+
+        div.dapps {
+            min-height: $min-height;
+            height: fit-content;
+
+            opacity: 1;
+
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        div.search-bar-input {
+            border-bottom-color: rgba($color: #000, $alpha: 0.1);
+
+            mat-icon {
+                transform: rotate(-180deg);
+            }
+        }
+    }
+
+    div.search-bar-input {
+        width: 100%;
+        min-height: 40px;
+
+        overflow: hidden;
+
+        border-bottom: 1px solid transparent;
+
+        input {
+            border: none;
+            outline: none;
+            background-color: transparent;
+
+            width: 100%;
+
+            margin-left: 10px;
+
+            font-size: 0.7em;
+
+            &::placeholder {
+                font-weight: 700;
+            }
+        }
+
+        mat-icon {
+            transition: transform var(--animation-speed);
+        }
+    }
+
+    div.dapps {
+        min-height: 0px;
+        max-height: $max-height;
+        height: 0;
+
+        overflow: hidden;
+        opacity: 0;
+
+        transition: all var(--animation-speed);
+
+        a.item {
+            padding: 8px 15px;
+
+            font-size: 12px;
+
+            cursor: pointer;
+
+            border-bottom: 1px solid rgba($color: #000, $alpha: 0.1);
+
+            text-decoration: none;
+
+            color: #000;
+
+            img {
+                width: 30px;
+                height: 30px;
+
+                margin-right: 15px;
+
+                border-radius: 12px;
+            }
+
+            strong, span {
+                margin: 0;
+                line-height: 16px;
+            }
+
+            span {
+                font-size: 10px;
+                opacity: 0.5;
+            }
+        }
+    }
+}
