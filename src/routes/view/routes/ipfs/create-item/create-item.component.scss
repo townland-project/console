@@ -1,0 +1,13 @@
+div[mat-dialog-actions] {
+    direction: rtl;
+
+    button {
+        margin-left: 10px;
+    }
+}
+
+mat-form-field {
+    width: 100%;
+    min-width: 300px;
+    max-width: 300px;
+}

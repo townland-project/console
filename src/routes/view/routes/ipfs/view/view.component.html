@@ -1,0 +1,39 @@
+<header class="flex nowrap ai-c">
+    <div class="online-dot" [ngClass]="{'online': IpfsService.Online}"></div>
+    <span>{{IpfsService.Online ? 'Online' : 'Offline'}}</span>
+    &nbsp;
+    <span>with {{peers}} peers</span>
+</header>
+<header class="flex nowrap ai-c">
+    <button mat-icon-button [disabled]="!backable" (click)="Back()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>{{path}}</span>
+    <div class="flex-space"></div>
+    <button mat-raised-button color="primary" [disabled]="loading || creating" [matMenuTriggerFor]="menu">
+        <mat-icon>add</mat-icon>
+        Create new
+    </button>
+</header>
+
+<mat-progress-bar *ngIf="creating" mode="indeterminate"></mat-progress-bar>
+
+<ng-container *ngIf="!loading">
+    <app-manager [Path]="path" (ChangePath)="path = $event"></app-manager>
+</ng-container>
+
+<mat-menu #menu="matMenu" xPosition="before">
+    <button mat-menu-item (click)="Create('directory')">
+        <mat-icon>create_new_folder</mat-icon>
+        Create new folder
+    </button>
+    <button mat-menu-item (click)="Create('file')">
+        <mat-icon>note_add</mat-icon>
+        Create new file
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="Upload()">
+        <mat-icon>file_upload</mat-icon>
+        Upload from local
+    </button>
+</mat-menu>

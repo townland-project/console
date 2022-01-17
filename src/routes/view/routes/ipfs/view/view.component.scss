@@ -1,0 +1,22 @@
+header {
+    padding: 5px 0px !important;
+
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.12);
+
+    div.online-dot {
+        &.online {
+            background-color: #00c853;
+        }
+
+        &:not(.online) {
+            background-color: #d50000;
+        }
+
+        width: 10px;
+        height: 10px;
+
+        border-radius: 50%;
+
+        margin-right: 8px;
+    }
+}

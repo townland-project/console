@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Create a new {{mode == 'file' ? 'file' : 'directory'}}</h2>
+<p mat-dialog-subtitle>Choose a name for your new {{mode == 'file' ? 'file' : 'directory'}}</p>
+
+<div mat-dialog-content>
+    <mat-form-field appearance="outline">
+        <mat-label>Your {{mode == 'file' ? 'file' : 'directory'}} name</mat-label>
+        <input [name]="mode == 'file' ? 'file-name' : 'directory-name'" autocomplete="off" matInput [(ngModel)]="name" (keyup.enter)="submit()">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="primary" [mat-dialog-close]="name" [disabled]="name.length == 0">Create</button>
+    <button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+</div>

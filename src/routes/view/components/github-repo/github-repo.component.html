@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>There are all repositories in your GitHub</h2>
+<p mat-dialog-subtitle>Select one of your repositories and we auto fill your manifest</p>
+
+<div mat-dialog-content *ngIf="data == undefined">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+<div mat-dialog-content *ngIf="data?.length == 0">
+    <p>You don't have any repository.</p>
+</div>
+<div mat-dialog-content *ngIf="data?.length != 0">
+    <ng-container *ngFor="let item of data">
+        <div class="item flex nowrap ai-c" [ngClass]="{'selected': selected == item}" (click)="selected = item">
+            <img [src]="item.owner.avatar_url" [alt]="">
+            <span>{{item.full_name}}</span>
+        </div>
+        <mat-divider></mat-divider>
+    </ng-container>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="primary" [mat-dialog-close]="selected" [disabled]="!selected">Select</button>
+    <button mat-button mat-dialog-close cdkFocusInitial>No Thanks</button>
+</div>

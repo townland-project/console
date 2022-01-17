@@ -1,0 +1,25 @@
+<div class="flex wrap">
+    <ng-container *ngFor="let item of items">
+        <mat-card>
+            <mat-card-content matRipple (click)="Open(item)">
+                <div class="flex nowrap ai-c">
+                    <mat-icon class="type">{{item.type == 'directory' ?'folder': 'description'}}</mat-icon>
+                    <div class="flex column">
+                        <strong>{{item.name}}</strong>
+                        <span>{{item.cid}}</span>
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+                <div class="flex nowrap ai-c">
+                    <span class="size">{{GetSizeFrom(item.size)}}</span>
+                    <div class="flex-space"></div>
+                    <button mat-icon-button (click)="Delete(item)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </ng-container>
+</div>
