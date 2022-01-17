@@ -44,5 +44,14 @@ export const Tabs: ITab[] = [
         background: '#00e676',
         show: false,
         backable: true
+    },
+    {
+        title: 'IPFS',
+        subtitle: 'The InterPlanetary File System',
+        path: '/ipfs',
+        theme: 'dark',
+        background: '#ffc107',
+        show: true,
+        backable: false
     }
 ]

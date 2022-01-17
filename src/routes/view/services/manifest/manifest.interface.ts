@@ -1,8 +1,13 @@
+import { TDAppPermission } from "../../../../database/dapp.permissions";
+
 export interface IManifest {
     name: string
     image: string
     description: string
-    external_url: string
+    email: string
+    webpage: string
+    version: string
+    permissions: TDAppPermission[]
     attributes: IManifestAttribute[]
 }
 

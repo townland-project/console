@@ -3,9 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: 'auth',
+    loadChildren: async () => (await import('../routes/auth/auth.module')).AuthModule
+  },
+  {
     path: '',
-    loadChildren: async ()=>  (await import('../routes/view/view.module')).ViewModule
-  }
+    loadChildren: async () => (await import('../routes/view/view.module')).ViewModule
+  },
 ];
 
 @NgModule({

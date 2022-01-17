@@ -8,16 +8,20 @@ export class ManifestService {
 
   constructor() { }
 
-  GetImageById(id: string): string {
-    return `https://dapp.townland.xyz/id/${id}/image.png`
-  }
-
-  async FetchById(id: string): Promise<IManifest> {
+  async FetchById(url: string): Promise<IManifest> {
     try {
-      let res = await fetch(`https://dapp.townland.xyz/id/${id}/manifest.json`)
+      let res = await fetch(url)
       return await res.json()
     } catch (error) {
       return Promise.reject(error)
     }
+  }
+
+  ToFile(manifest: IManifest): File {
+    const str = JSON.stringify(manifest);
+    const bytes = new TextEncoder().encode(str);
+    return new File([bytes], 'manifest.json', {
+      type: "application/json;charset=utf-8"
+    });
   }
 }

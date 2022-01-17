@@ -8,9 +8,6 @@
                 <p>Owner by <a [href]="'https://polygonscan.com/address/' + dapp.owner">{{dapp.owner}}</a></p>
             </div>
             <div class="flex-space"></div>
-            <a [href]="manifest.external_url" target="_blank" mat-icon-button matTooltip="Open DApp">
-                <mat-icon>open_in_new</mat-icon>
-            </a>
             <button mat-icon-button matTooltip="Share" [matMenuTriggerFor]="share">
                 <mat-icon>share</mat-icon>
             </button>

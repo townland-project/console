@@ -4,3 +4,9 @@ export interface IDApp {
     uri: string
     owner: string
 }
+
+export interface IConfig {
+    AddFee: number
+    ChangeFee: number
+    Gateway: string
+}

@@ -25,3 +25,73 @@ app-create-footer {
 
     margin-top: 30px;
 }
+
+button.github-button {
+    background-color: #24292f;
+    color: #ffffff;
+
+    float: right;
+    margin-left: auto;
+
+    div.icon {
+        width: 18px;
+        height: 18px;
+
+        background-image: url('/assets/GitHub-Mark-Light-32px.png');
+        background-size: 18px;
+        background-repeat: no-repeat;
+        background-position: center center;
+
+        margin-right: 12px;
+
+        display: inline-block;
+    }
+}
+
+div.image-container {
+    min-width: 300px;
+    width: 300px;
+    min-height: 300px;
+    height: 300px;
+
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin: 5px 10px 5px 0;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    &.selected {
+        span,
+        mat-icon {
+            display: none;
+        }
+    }
+
+    &:not(.selected) img {
+        display: none;
+    }
+
+    mat-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 35px;
+    }
+
+    span {
+        margin-top: 10px;
+        opacity: 0.75;
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}

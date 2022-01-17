@@ -40,7 +40,7 @@ export class NftComponent implements OnInit, OnDestroy {
   async FetchByIndex(index: number): Promise<void> {
     try {
       this.dapp = this.ContractService.DApps[index];      
-      this.manifest = await this.ManifestService.FetchById(this.dapp.id)
+      this.manifest = await this.ManifestService.FetchById(this.dapp.uri)
       return Promise.resolve()
     } catch (error) {
       return Promise.reject(error);

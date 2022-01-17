@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material';
 
+// pipes
+import { SafeUrlPipe } from '../../pipe/safeUrl';
 // components
 import { CreateComponent } from './create/create.component';
 import { CreateFooterComponent } from './create-footer/create-footer.component';
@@ -11,10 +13,9 @@ import { NftComponent } from './nft/nft.component';
 import { ListComponent } from './list/list.component';
 import { CreateDialogComponent } from './create-dialog/create-dialog.component';
 
-
-
 @NgModule({
   declarations: [
+    SafeUrlPipe,
     CreateComponent,
     CreateFooterComponent,
     NftComponent,

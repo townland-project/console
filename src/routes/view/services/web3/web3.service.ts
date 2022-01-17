@@ -11,12 +11,12 @@ export class Web3Service {
   public account: string = '';
   public accounts: string[] = [];
 
-  private abi_url: string = 'https://cloudflare-ipfs.com/ipfs/QmQbq7pMKiVLez3nE9anmEJdSU8YTnBt97AbcLQAjEwEZX';
-  private contract_address: string = '0xF4e6D97e66563BF3DB6D1aaD2D1531d6144a40F6';
+  private abi_url: string = 'https://cloudflare-ipfs.com/ipfs/QmQSNGCH3E44pFobM7iq6hLXHV9MkAdadHLhSHLEc5VLBn';
+  private contract_address: string = '0x4AE53185a1f21ae61574f8a03fE32F31a6D6E528';
 
   constructor() { }
 
-  async FetchABI(): Promise<any> {
+  private async FetchABI(): Promise<any> {
     try {
       let res = await fetch(this.abi_url)
       let json = await res.json();
@@ -48,7 +48,7 @@ export class Web3Service {
 
   GetAccounts(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.web3!.eth.getAccounts((err, accounts) => {        
+      this.web3!.eth.getAccounts((err, accounts) => {
         if (err) reject()
         this.accounts = accounts
         this.account = accounts[0]
@@ -61,5 +61,10 @@ export class Web3Service {
   SetAccount(account: string) {
     this.account = account;
     this.web3!.eth.defaultAccount = this.account;
+  }
+
+  Sign(message: string): Promise<string> | undefined {
+    let hash = this.web3?.utils.sha3(message)!
+    return this.web3?.eth.sign(hash, this.account)
   }
 }

@@ -14,76 +14,141 @@
             <form class="flex column" [formGroup]="select">
                 <mat-form-field appearance="outline">
                     <mat-label>Select DApp ID</mat-label>
-                    <mat-select required formControlName="input"
-                        (selectionChange)="OnDAppIDChange($event)">
-                        <mat-option *ngFor="let id of IDs" [value]="id">
-                            {{id}}
-                        </mat-option>
+                    <mat-select required formControlName="input">
                         <mat-option value="create-dapp-id">
                             Create new DApp ID
                         </mat-option>
+                        <ng-container *ngIf="IDs.length != 0">
+                            <mat-divider></mat-divider>
+                            <mat-optgroup label="Your DApps ID">
+                                <mat-option *ngFor="let id of IDs" [value]="id">
+                                    {{id}}
+                                </mat-option>
+                            </mat-optgroup>
+                        </ng-container>
                     </mat-select>
                 </mat-form-field>
             </form>
 
-            <app-create-footer [backable]="false" [disabled]="(SelectID.length == 0 && createable == false) || loading"
-                (next)="Next()"></app-create-footer>
+            <app-create-footer [backable]="false" [disabled]="SelectID.length == 0 || loading" (next)="Next()">
+            </app-create-footer>
         </mat-step>
-        <mat-step [stepControl]="create" *ngIf="createable">
-            <ng-template matStepLabel>Buy DApp ID</ng-template>
-            <p>Enter a your new DApp ID and pay it with <b>{{ContractService.Fee / 1000}} MATIC</b>.</p>
+        <mat-step [stepControl]="create" *ngIf="SelectID == 'create-dapp-id'">
+            <ng-template matStepLabel>Choose DApp ID</ng-template>
+            <p>Enter a your new DApp ID and pay it with <b>{{ContractService.Config.AddFee / 1000}} MATIC</b>.</p>
             <p>Hint: Your DApp ID must be like <code>xyz.townland.app</code></p>
 
             <form class="flex column" [formGroup]="create">
                 <mat-form-field appearance="outline">
                     <mat-label>DApp ID</mat-label>
                     <input matInput required type="text" autocomplete="off" formControlName="input"
-                        (keyup.enter)="ConfirmAndPayDAppID()">
+                        (keyup.enter)="SubmitDAppID()">
                 </mat-form-field>
             </form>
 
-            <app-create-footer (back)="Back()" [disabled]="!ValidDAppID || loading" text="Confirm And Buy"
-                (next)="ConfirmAndPayDAppID()"></app-create-footer>
+            <app-create-footer (back)="Back()" [disabled]="!ValidDAppID || loading" text="Confirm"
+                (next)="SubmitDAppID()"></app-create-footer>
         </mat-step>
         <mat-step [stepControl]="manifest">
             <ng-template matStepLabel>Create DApp manifest</ng-template>
-            <p>Create/Edit a manifest file for your DApp.</p>
+            <p>
+                Create/Edit a manifest file for your DApp.
 
-            <form class="flex column" [formGroup]="manifest">
-                <mat-form-field appearance="outline">
-                    <mat-label>DApp Name</mat-label>
-                    <input matInput required type="text" autocomplete="off" formControlName="name" (keyup.enter)="SubmitManifest()">
-                </mat-form-field>
+                <button mat-button class="github-button" (click)="SelectFromGithubRepo()">
+                    <div class="icon"></div>
+                    <span>From my Github repo</span>
+                </button>
+            </p>
 
-                <mat-form-field appearance="outline">
-                    <mat-label>DApp Image</mat-label>
-                    <input matInput required type="url" autocomplete="off" formControlName="image" (keyup.enter)="SubmitManifest()">
-                </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                    <mat-label>DApp Description</mat-label>
-                    <textarea matInput required autocomplete="off" formControlName="description" (keyup.enter)="SubmitManifest()"></textarea>
-                </mat-form-field>
+            <form class="flex wrap" [formGroup]="manifest">
+                <div class="image-container" (click)="SelectAnImage()" [ngClass]="{'selected': DAppImage.length != 0}">
+                    <mat-icon>image</mat-icon>
+                    <span>DApp Icon</span>
+                    <img [src]="DAppImage | safeUrl">
+                </div>
 
-                <mat-form-field appearance="outline">
-                    <mat-label>DApp URL</mat-label>
-                    <input matInput required type="url" autocomplete="off" formControlName="external_url" (keyup.enter)="SubmitManifest()" />
-                </mat-form-field>
+                <div class="flex column">
+                    <mat-form-field appearance="outline">
+                        <mat-label>DApp Name</mat-label>
+                        <input matInput required type="text" autocomplete="off" formControlName="name"
+                            (keyup.enter)="SubmitManifest()">
+                    </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                    <mat-label>DApp Author</mat-label>
-                    <input matInput required type="text" autocomplete="off" formControlName="author" (keyup.enter)="SubmitManifest()" />
-                </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput required autocomplete="off" formControlName="description"
+                            (keyup.enter)="SubmitManifest()"></textarea>
+                    </mat-form-field>
 
+                    <mat-form-field appearance="outline">
+                        <mat-label>Version</mat-label>
+                        <input matInput required type="text" autocomplete="off" formControlName="version"
+                            (keyup.enter)="SubmitManifest()">
+                        <mat-hint>Like: 0.0.1 or 0.1.0 or 1.0.0</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Author Name</mat-label>
+                        <input matInput required type="text" autocomplete="off" formControlName="author"
+                            (keyup.enter)="SubmitManifest()" />
+                        <mat-hint>Like: Townland Project</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Author Email</mat-label>
+                        <input matInput required type="email" autocomplete="off" formControlName="email"
+                            (keyup.enter)="SubmitManifest()" />
+                        <mat-hint>Like: mail@townland.xyz</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Author Web Page</mat-label>
+                        <input matInput required type="url" autocomplete="off" formControlName="webpage"
+                            (keyup.enter)="SubmitManifest()" />
+                        <mat-hint>Like: townland.xyz</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Repository</mat-label>
+                        <input matInput required type="url" autocomplete="off" formControlName="repository"
+                            (keyup.enter)="SubmitManifest()" />
+                        <mat-hint>Like: https://github.com/townland-project/application</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Permissions</mat-label>
+                        <mat-select formControlName="permissions" multiple>
+                            <mat-select-trigger>
+                                {{DAppPermissions.length == all_permissions.length ? 'All' : 'Custom'}}
+                                <span style="opacity: 0.75; font-size: 0.75em;">(+{{DAppPermissions.length}}
+                                    Permission{{DAppPermissions.length > 1 ? 's' : ''}})</span>
+                            </mat-select-trigger>
+                            <div class="mat-optgroup-label">
+                                <mat-checkbox color="primary"
+                                    [checked]="DAppPermissions.length == all_permissions.length"
+                                    [indeterminate]="DAppPermissions.length != all_permissions.length && DAppPermissions.length != 0"
+                                    (change)="SelectionPermissionsChange($event)">Select All</mat-checkbox>
+                            </div>
+                            <mat-divider></mat-divider>
+                            <mat-optgroup *ngFor="let permission of permissions" [label]="permission.group">
+                                <mat-option *ngFor="let item of permission.items" [value]="item">{{item}}</mat-option>
+                            </mat-optgroup>
+                        </mat-select>
+                        <mat-hint>Your DApp cannot have no permission.</mat-hint>
+                    </mat-form-field>
+                </div>
             </form>
             <app-create-footer (back)="Back()" [disabled]="manifest.invalid || loading" text="Submit Manifest"
                 (next)="SubmitManifest()"></app-create-footer>
         </mat-step>
         <mat-step>
             <ng-template matStepLabel>Confirm and publish</ng-template>
+            <h2>Confirm and publish</h2>
+            <p>Are you realy sure and want you confirm and pay some <b>Matic</b> for that ?</p>
             <br><br>
-            <p>Well, now send us the same information on GitHub :)</p>
-            <br><br>
+            <app-create-footer (back)="Back()" (next)="Submit()" [disabled]="loading" text="Confirm And Pay">
+            </app-create-footer>
         </mat-step>
     </mat-stepper>
 </mat-card>
